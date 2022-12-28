@@ -1,0 +1,291 @@
+USE [master]
+GO
+/****** Base de Datos de estudante creada por ******/
+/****** Joel Alberto Payano Espinal		21-SIIN-1-098 ******/
+
+CREATE DATABASE [CIA FINAL]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'CIA FINAL', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\CIA FINAL.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'CIA FINAL_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\CIA FINAL_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [CIA FINAL] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [CIA FINAL].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [CIA FINAL] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [CIA FINAL] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [CIA FINAL] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [CIA FINAL] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [CIA FINAL] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [CIA FINAL] SET  MULTI_USER 
+GO
+ALTER DATABASE [CIA FINAL] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [CIA FINAL] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [CIA FINAL] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [CIA FINAL] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [CIA FINAL] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [CIA FINAL] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [CIA FINAL] SET QUERY_STORE = OFF
+GO
+USE [CIA FINAL]
+GO
+/****** Object:  Table [dbo].[Articulos]    Script Date: 26/8/2022 00:29:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Articulos](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [varchar](50) NOT NULL,
+	[Marca] [varchar](50) NOT NULL,
+	[Costo] [decimal](18, 0) NOT NULL,
+	[Garantia] [varchar](10) NOT NULL,
+ CONSTRAINT [PK_Articulos] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Clientes]    Script Date: 26/8/2022 00:29:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Clientes](
+	[Id] [int] IDENTITY(1,2) NOT NULL,
+	[Nombre] [varchar](50) NOT NULL,
+	[RNC] [varchar](20) NOT NULL,
+	[Direccion] [varchar](50) NOT NULL,
+	[No. Telefono] [varchar](15) NOT NULL,
+ CONSTRAINT [PK_Clientes_1] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Empleados]    Script Date: 26/8/2022 00:29:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Empleados](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nombres] [varchar](50) NOT NULL,
+	[Sexo] [varchar](1) NOT NULL,
+	[Telefono] [varchar](15) NOT NULL,
+	[Email] [varchar](20) NOT NULL,
+	[Oficio] [varchar](30) NOT NULL,
+	[Edad] [varchar](2) NOT NULL,
+ CONSTRAINT [PK_Empleados.] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Facturas]    Script Date: 26/8/2022 00:29:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Facturas](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Fecha] [varchar](10) NOT NULL,
+	[ClienteId] [int] NOT NULL,
+	[ArticuloId] [int] NOT NULL,
+	[Precio] [decimal](9, 0) NOT NULL,
+	[TipoPago] [varchar](20) NOT NULL,
+	[EmpleadoId] [int] NOT NULL,
+ CONSTRAINT [PK_Facturas] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Transporte]    Script Date: 26/8/2022 00:29:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Transporte](
+	[TransporteId] [int] IDENTITY(1,1) NOT NULL,
+	[EmpleadoId] [int] NOT NULL,
+	[ClienteId] [int] NOT NULL,
+	[FacturaId] [int] NOT NULL,
+	[FechadeEntrega] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Transporte] PRIMARY KEY CLUSTERED 
+(
+	[TransporteId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Articulos] ON 
+
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (1, N'Navaja para afeitar', N'Whall', CAST(350 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (2, N'Brocha para afeitar', N'Beam', CAST(300 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (3, N'Brocha para afeitar de madera', N'Beam', CAST(550 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (4, N'Crema para afeitar', N'Beam', CAST(990 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (5, N'Cepillo peqeño', N'Beam', CAST(320 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (6, N'Cera para pelo', N'Matte', CAST(550 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (7, N'Cera para pelo', N'Beam', CAST(450 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (8, N'Gel fijador', N'Matte', CAST(600 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (9, N'Gel fijador', N'Beam', CAST(500 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (10, N'Alcohol', N'Beam', CAST(300 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (11, N'Alcohol con aroma', N'Beam', CAST(450 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (12, N'Maquina para afeitar', N'Beam', CAST(3800 AS Decimal(18, 0)), N'3 meses')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (13, N'Maquina para afeitar', N'Whall', CAST(5500 AS Decimal(18, 0)), N'6 meses')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (14, N'Maquina de Cortar pelo', N'Whall', CAST(10500 AS Decimal(18, 0)), N'6 meses')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (15, N'Maquina de Cortar pelo', N'Beam', CAST(6500 AS Decimal(18, 0)), N'3 meses')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (16, N'Aceites lubricantes 3 en 1', N'Beam', CAST(150 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (17, N'Aceites desinfectante', N'Beam', CAST(200 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (18, N'Juegos de peines para maquina', N'Whall', CAST(1700 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (19, N'Cuchillas para maquina', N'Beam', CAST(1200 AS Decimal(18, 0)), N'1 mes')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (20, N'Cuchillas para maquina', N'Whall', CAST(1800 AS Decimal(18, 0)), N'2 meses')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (21, N'Pulverizadores de peluqueria', N'Beam', CAST(200 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (22, N'Guantes desechables', N'Beam', CAST(600 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (23, N'Capas de cortes', N'One size', CAST(450 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (24, N'Tijeras profecional', N'Whall', CAST(800 AS Decimal(18, 0)), N'3 meses')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (25, N'Tijeras profecional', N'Beam', CAST(390 AS Decimal(18, 0)), N'2 meses')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (26, N'Navajas desechables', N'Gillette', CAST(90 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (27, N'Navajas desechables', N'Beam', CAST(75 AS Decimal(18, 0)), N'Off')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (28, N'Silla de peluqueria fija', N'Maderony', CAST(3200 AS Decimal(18, 0)), N'6 meses')
+INSERT [dbo].[Articulos] ([Id], [Nombre], [Marca], [Costo], [Garantia]) VALUES (29, N'Silla de peluqueria reclinable', N'Maderony', CAST(6800 AS Decimal(18, 0)), N'8 meses')
+SET IDENTITY_INSERT [dbo].[Articulos] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Clientes] ON 
+
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (1, N'Michael Valdez', N'001-349', N'La esperanza C/1ra #24', N'829-837-2729')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (3, N'Jon Cruz', N'134-029', N'Savica C/2da #9', N'809-324-3433')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (5, N'Alberto Santos', N'455-353', N'Italia C/1ra #2', N'829-293-3979')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (7, N'Juan Castillo', N'645-346', N'Villa Faro C/5ta #48', N'809-345-6543')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (9, N'Maria Gonzales', N'874-005', N'Alpes C/2 #43', N'829-398-0289')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (11, N'Juana Gutierrez', N'402-983', N'Brisa C/3ra esq. 16 #12', N'849-983-0378')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (13, N'Anderson Espinal', N'070-453', N'Ralma C/J #24', N'809-098-2389')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (15, N'Jose Peñalo', N'029-284', N'Savica C/ 2da #47', N'829-325-1249')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (17, N'Edward Rodriguez', N'408-745', N'Vecinos Unidos C/ A #2', N'849-217-4512')
+INSERT [dbo].[Clientes] ([Id], [Nombre], [RNC], [Direccion], [No. Telefono]) VALUES (19, N'Santiago Bermudez', N'778-675', N'Bello Campo C/6ta #5', N'809-297-5939')
+SET IDENTITY_INSERT [dbo].[Clientes] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Empleados] ON 
+
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (1, N'Juan Soto', N'M', N'809-123-4567', N'JuanS@Outlook.com', N'Gerente', N'43')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (2, N'Pedro Ortiz', N'M', N'809-890-1234', N'PedroO@gmail.com', N'Supervisor', N'35')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (3, N'Ana Montero', N'F', N'829-567-8901', N'AnaM@hotmail.com', N'Lider de Ventas', N'29')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (4, N'Alex Orozco', N'M', N'809-343-2344', N'AlexO@gmail.com', N'Encargado de Factura', N'34')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (5, N'Sofia Vergara', N'F', N'829-234-5678', N'SofiaV@gmail.com', N'Tecnico', N'27')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (6, N'Angel Matias', N'M', N'849-901-2345', N'AngelM@hotmal.com', N'Tecnico', N'24')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (7, N'Maria Mendez', N'F', N'829-678-9012', N'MariaM@gmail.com', N'Servicio al Cliente', N'20')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (8, N'Robert Tejada', N'M', N'809-345-6789', N'RobertT@gmail.com', N'Servicio al Cliente', N'25')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (9, N'Erlyn Santana', N'M', N'829-023-4567', N'ErlynS@outlook.com', N'Transporte', N'33')
+INSERT [dbo].[Empleados] ([Id], [Nombres], [Sexo], [Telefono], [Email], [Oficio], [Edad]) VALUES (10, N'Elsa Contreras', N'F', N'809-896-3412', N'ElsaC@gmail.com', N'Encargada de limpieza', N'36')
+SET IDENTITY_INSERT [dbo].[Empleados] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Facturas] ON 
+
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (1, N'03/08/2022', 1, 14, CAST(10500 AS Decimal(9, 0)), N'Tarjeta Cr', 7)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (2, N'03/08/2022', 3, 29, CAST(6800 AS Decimal(9, 0)), N'Tarjeta Cr', 8)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (3, N'03/08/2022', 5, 23, CAST(450 AS Decimal(9, 0)), N'Transaccion', 8)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (4, N'03/08/2022', 7, 14, CAST(10500 AS Decimal(9, 0)), N'Tarjeta Cr', 7)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (5, N'03/08/2022', 11, 24, CAST(800 AS Decimal(9, 0)), N'Efectivo', 8)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (6, N'03/08/2022', 19, 26, CAST(90 AS Decimal(9, 0)), N'Efectivo', 8)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (7, N'03/08/2022', 15, 16, CAST(150 AS Decimal(9, 0)), N'Efectivo', 7)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (10, N'03/08/2022', 9, 17, CAST(1700 AS Decimal(9, 0)), N'Transaccion', 7)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (11, N'03/08/2022', 13, 10, CAST(300 AS Decimal(9, 0)), N'Efectivo', 8)
+INSERT [dbo].[Facturas] ([Id], [Fecha], [ClienteId], [ArticuloId], [Precio], [TipoPago], [EmpleadoId]) VALUES (12, N'03/08/2022', 17, 19, CAST(1200 AS Decimal(9, 0)), N'Transaccion', 8)
+SET IDENTITY_INSERT [dbo].[Facturas] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Transporte] ON 
+
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (1, 9, 1, 1, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (3, 9, 3, 2, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (4, 9, 5, 3, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (5, 9, 7, 4, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (6, 9, 11, 5, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (7, 9, 19, 6, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (8, 9, 15, 7, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (11, 9, 9, 10, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (13, 9, 13, 11, N'04/08/2022')
+INSERT [dbo].[Transporte] ([TransporteId], [EmpleadoId], [ClienteId], [FacturaId], [FechadeEntrega]) VALUES (14, 9, 17, 12, N'04/08/2022')
+SET IDENTITY_INSERT [dbo].[Transporte] OFF
+GO
+ALTER TABLE [dbo].[Facturas]  WITH CHECK ADD  CONSTRAINT [FK_Facturas_Articulos1] FOREIGN KEY([ArticuloId])
+REFERENCES [dbo].[Articulos] ([Id])
+GO
+ALTER TABLE [dbo].[Facturas] CHECK CONSTRAINT [FK_Facturas_Articulos1]
+GO
+ALTER TABLE [dbo].[Facturas]  WITH CHECK ADD  CONSTRAINT [FK_Facturas_Clientes1] FOREIGN KEY([ClienteId])
+REFERENCES [dbo].[Clientes] ([Id])
+GO
+ALTER TABLE [dbo].[Facturas] CHECK CONSTRAINT [FK_Facturas_Clientes1]
+GO
+ALTER TABLE [dbo].[Facturas]  WITH CHECK ADD  CONSTRAINT [FK_Facturas_Empleados] FOREIGN KEY([EmpleadoId])
+REFERENCES [dbo].[Empleados] ([Id])
+GO
+ALTER TABLE [dbo].[Facturas] CHECK CONSTRAINT [FK_Facturas_Empleados]
+GO
+ALTER TABLE [dbo].[Transporte]  WITH CHECK ADD  CONSTRAINT [FK_Transporte_Clientes] FOREIGN KEY([ClienteId])
+REFERENCES [dbo].[Clientes] ([Id])
+GO
+ALTER TABLE [dbo].[Transporte] CHECK CONSTRAINT [FK_Transporte_Clientes]
+GO
+ALTER TABLE [dbo].[Transporte]  WITH CHECK ADD  CONSTRAINT [FK_Transporte_Empleados] FOREIGN KEY([EmpleadoId])
+REFERENCES [dbo].[Empleados] ([Id])
+GO
+ALTER TABLE [dbo].[Transporte] CHECK CONSTRAINT [FK_Transporte_Empleados]
+GO
+USE [master]
+GO
+ALTER DATABASE [CIA FINAL] SET  READ_WRITE 
+GO
